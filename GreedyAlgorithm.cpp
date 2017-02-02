@@ -219,3 +219,75 @@ void KrushkalMST(Graph  * graph)
         cout<<result[i].source<<"\t"<<result[i].dest<<"     "<<result[i].dist<<endl;
 }
 //-------------------------------------------------------------------------------------------------------------------------------------
+
+
+#include<iostream>
+#include<queue>
+
+using namespace std;
+
+struct Node
+{
+    int value;
+    char chValue;
+    int rightDistance;
+    int leftDistance;
+    Node * right;
+    Node * left;    
+   
+};
+
+bool operator<(const Node & a , const Node & b)
+{
+    return a.value>b.value;
+}
+priority_queue<Node >  HuffmanCodeGenerator(int * valueArr, char * chValueArr, int size)
+{
+    priority_queue<Node > q;
+    
+    for(int i=0;i<size;i++)
+    {
+        Node newNode;
+        newNode.value=valueArr[i];
+        newNode.chValue=chValueArr[i];
+        q.push(newNode);
+    }
+    HuffmanCodeGeneratorUtil(q);
+    return q;
+}
+Node * HuffmanCodeGeneratorUtil(priority_queue<Node> q)
+{
+    while(q.size()!=1)
+    {
+        Node node1=q.pop();
+        Node node2=q.pop();
+        Node newNode;
+        newNode.vlaue=node1.value+node2.value;
+        newNode.chValue='';
+        newNode.rightDistance='0';
+        newNode.leftDistance='1';
+        newNode.right=
+    }
+    
+}
+
+void printQueue(priority_queue<Node > q)
+{
+    int end=q.size();
+    for( int i=0;i<end ;i++)
+    {     
+        Node  n= q.top();
+        q.pop();
+        cout<<n.value<<endl;
+    }  
+
+}
+int main()
+{
+    char arr[] = {'a', 'b', 'c', 'd', 'e', 'f'};
+    int freq[] = {5, 9, 12, 13, 16, 45};
+    int size = sizeof(arr)/sizeof(arr[0]);
+    priority_queue<Node > n=HuffmanCodeGenerator(freq,arr,size);
+    printQueue(n);
+    
+}
