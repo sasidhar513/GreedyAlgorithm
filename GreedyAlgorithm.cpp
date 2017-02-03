@@ -410,3 +410,100 @@ int main()
     HuffmanCodeGenerator(freq,arr,size);
     
 }
+
+
+#include<iostream>
+#include<queue>
+
+using namespace std;
+
+struct Node
+{
+    int value;
+    char chValue;
+    Node * right;
+    Node * left;   
+    Node(int val,int chVal,Node * right ,Node * left )
+    {
+        this->value=val;
+        this->chValue=chVal;
+        this->right=right;
+        this->left=right;
+    }
+    Node(){}
+   
+};
+void printQueue(priority_queue<Node > q)
+{
+    int end=q.size();
+    for( int i=0;i<end ;i++)
+    {     
+        Node  n= q.top();
+        q.pop();
+        cout<<n.value<<endl;
+    }  
+
+}
+struct  compare
+{
+    bool operator()(Node * l ,Node * r)
+    {
+        return l->value >r->value ;
+    }
+};
+bool operator<(const Node & a , const Node & b)
+{
+    return a.value>b.value;
+}
+void HuffmanCodeGeneratorUtil(priority_queue<Node *,vector<Node *>, compare> &q)
+{
+    while(q.size()!=1)
+    {
+        //printQueue(q);
+        Node *node1=q.top();
+        q.pop();
+        Node *node2=q.top();
+        q.pop();
+        int value=node1->value+node2->value;
+        Node *newNode= new Node(value,' ',node2,node1);
+       
+        newNode->right=node2;
+        newNode->left=node1;
+        q.push(newNode);
+    }   
+}
+void Traversal(Node *n,string attach)
+{
+        //cout<<"passed here "<<n->value<<endl;
+
+    if(n->left==NULL&&n->right==NULL)
+    {
+          cout<<n->chValue<< " "<<attach<<endl;
+    }
+    else
+    {
+        Traversal(n->left,attach+"0");
+        Traversal(n->right,attach+"1");
+    }
+}
+void   HuffmanCodeGenerator(int * valueArr, char * chValueArr, int size)
+{
+    priority_queue<Node *,vector<Node *>,compare > q;    
+    for(int i=0;i<size;i++)
+       q.push(new Node(valueArr[i],chValueArr[i],NULL,NULL));
+    HuffmanCodeGeneratorUtil(q);
+    Node *n=q.top();
+    //cout<<n.value<<endl;
+    Traversal(n,"");
+}
+
+
+
+int main()
+{
+    char arr[] = {'a', 'b', 'c', 'd', 'e', 'f'};
+    int freq[] = {5, 9, 12, 13, 16, 45};
+    int size = sizeof(arr)/sizeof(arr[0]);
+    HuffmanCodeGenerator(freq,arr,size);
+    
+}
