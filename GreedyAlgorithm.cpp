@@ -220,203 +220,25 @@ void KrushkalMST(Graph  * graph)
 }
 //-------------------------------------------------------------------------------------------------------------------------------------
 
-
-#include<iostream>
-#include<queue>
-
-using namespace std;
-
-struct Node
-{
-    int value;
-    char chValue;
-    int rightDistance;
-    int leftDistance;
-    Node * right;
-    Node * left;    
-   
-};
-
-bool operator<(const Node & a , const Node & b)
-{
-    return a.value>b.value;
-}
-priority_queue<Node >  HuffmanCodeGenerator(int * valueArr, char * chValueArr, int size)
-{
-    priority_queue<Node > q;
-    
-    for(int i=0;i<size;i++)
-    {
-        Node newNode;
-        newNode.value=valueArr[i];
-        newNode.chValue=chValueArr[i];
-        q.push(newNode);
-    }
-    HuffmanCodeGeneratorUtil(q);
-    return q;
-}
-Node * HuffmanCodeGeneratorUtil(priority_queue<Node> q)
-{
-    while(q.size()!=1)
-    {
-        Node node1=q.pop();
-        Node node2=q.pop();
-        Node newNode;
-        newNode.vlaue=node1.value+node2.value;
-        newNode.chValue='';
-        newNode.rightDistance='0';
-        newNode.leftDistance='1';
-        newNode.right=
-    }
-    
-}
-
-void printQueue(priority_queue<Node > q)
-{
-    int end=q.size();
-    for( int i=0;i<end ;i++)
-    {     
-        Node  n= q.top();
-        q.pop();
-        cout<<n.value<<endl;
-    }  
-
-}
-int main()
-{
-    char arr[] = {'a', 'b', 'c', 'd', 'e', 'f'};
-    int freq[] = {5, 9, 12, 13, 16, 45};
-    int size = sizeof(arr)/sizeof(arr[0]);
-    priority_queue<Node > n=HuffmanCodeGenerator(freq,arr,size);
-    printQueue(n);
-    
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#include<iostream>
-#include<queue>
-
-using namespace std;
-
-struct Node
-{
-    int value;
-    char chValue;
-    Node * right;
-    Node * left;    
-   
-};
-void printQueue(priority_queue<Node > q)
-{
-    int end=q.size();
-    for( int i=0;i<end ;i++)
-    {     
-        Node  n= q.top();
-        q.pop();
-        cout<<n.value<<endl;
-    }  
-
-}
-
-bool operator<(const Node & a , const Node & b)
-{
-    return a.value>b.value;
-}
-Node *HuffmanCodeGeneratorUtil(priority_queue<Node> q)
-{
-    while(q.size()!=1)
-    {
-        cout<<"printing " <<endl;
-        printQueue(q);
-        Node node1=q.top();
-        q.pop();
-        Node node2=q.top();
-        q.pop();
-        Node newNode;
-        newNode.value=node1.value+node2.value;
-        newNode.chValue=' ';
-        newNode.right=&node2;
-        newNode.left=&node1;
-        cout<<" formed the new node value "<<newNode.value<<" with the values from "<<newNode.right->value<<" and " <<newNode.left->value<<endl;
-        q.push(newNode);
-    }
-    Node n=q.top();
-    return &n;
-    
-    
-}
-void Traversal(Node * n,string attach)
-{
-        cout<<"passed here "<<n->value<<endl;
-
-    if(n->left==NULL&&n->right==NULL)
-    {
-          cout<<"this "<<n->chValue<< " "<<attach<<endl;
-    }
-    else
-    {
-        Traversal(n->left,attach+"0");
-        Traversal(n->right,attach+"1");
-    }
-}
-void   HuffmanCodeGenerator(int * valueArr, char * chValueArr, int size)
-{
-    priority_queue<Node > q;
-    
-    for(int i=0;i<size;i++)
-    {
-        Node newNode;
-        newNode.value=valueArr[i];
-        newNode.chValue=chValueArr[i];
-        newNode.left=NULL;
-        newNode.right=NULL;
-        q.push(newNode);
-    }
-    Node *n=HuffmanCodeGeneratorUtil(q);
-        int s=n->left->value;
-
-    cout<<" formed the new node value "<<n->value<<" with the values from "<<n->right->value<<" and " <<n->left->value<<endl;
-    //Node *m=n.left;
-    //int s=n->left->value;
-        cout<<" formed the new node value "<<" "<<s<<endl;//<<" with the values from "<<m->right->value<<" and " <<m->left->value<<endl;
-
-    //Traversal(&n,"");
-}
-
-
-
-int main()
-{
-    char arr[] = {'a', 'b', 'c', 'd', 'e', 'f'};
-    int freq[] = {5, 9, 12, 13, 16, 45};
-    int size = sizeof(arr)/sizeof(arr[0]);
-    HuffmanCodeGenerator(freq,arr,size);
-    
-}
-
-
-#include<iostream>
-#include<queue>
-
-using namespace std;
-
+/* Huffman coding
+we will hace the charcters and their frequecies 
+we should assign a code for each character so that one code is not prefix of other code 
+for more problem description go to http://www.geeksforgeeks.org/greedy-algorithms-set-3-huffman-coding/
+logic: 1 take all elements in minheap based on their frequencies 
+       2 loop and  stop when heap has only one element   
+            remove two min elements from heap  
+            create another node with frequency of the sum of two min nodes 
+            make first min as the left child with distance 0
+            make second min as the right child with distance 1
+            insert the new node in heap
+       3 Traverse the tree using DFS and print all the concatinations of all distances along the path as the code of the leaf node
+Main code to test the program:
+        
+            char arr[] = {'a', 'b', 'c', 'd', 'e', 'f'};
+            int freq[] = {5, 9, 12, 13, 16, 45};
+            int size = sizeof(arr)/sizeof(arr[0]);
+            HuffmanCodeGenerator(freq,arr,size);
+*/
 struct Node
 {
     int value;
@@ -428,10 +250,9 @@ struct Node
         this->value=val;
         this->chValue=chVal;
         this->right=right;
-        this->left=right;
+        this->left=left;
     }
-    Node(){}
-   
+    Node(){}   
 };
 void printQueue(priority_queue<Node > q)
 {
@@ -442,7 +263,6 @@ void printQueue(priority_queue<Node > q)
         q.pop();
         cout<<n.value<<endl;
     }  
-
 }
 struct  compare
 {
@@ -459,23 +279,17 @@ void HuffmanCodeGeneratorUtil(priority_queue<Node *,vector<Node *>, compare> &q)
 {
     while(q.size()!=1)
     {
-        //printQueue(q);
         Node *node1=q.top();
         q.pop();
         Node *node2=q.top();
         q.pop();
         int value=node1->value+node2->value;
-        Node *newNode= new Node(value,' ',node2,node1);
-       
-        newNode->right=node2;
-        newNode->left=node1;
+        Node *newNode= new Node(value,' ',node2,node1);       
         q.push(newNode);
     }   
 }
 void Traversal(Node *n,string attach)
 {
-        //cout<<"passed here "<<n->value<<endl;
-
     if(n->left==NULL&&n->right==NULL)
     {
           cout<<n->chValue<< " "<<attach<<endl;
@@ -493,17 +307,5 @@ void   HuffmanCodeGenerator(int * valueArr, char * chValueArr, int size)
        q.push(new Node(valueArr[i],chValueArr[i],NULL,NULL));
     HuffmanCodeGeneratorUtil(q);
     Node *n=q.top();
-    //cout<<n.value<<endl;
     Traversal(n,"");
-}
-
-
-
-int main()
-{
-    char arr[] = {'a', 'b', 'c', 'd', 'e', 'f'};
-    int freq[] = {5, 9, 12, 13, 16, 45};
-    int size = sizeof(arr)/sizeof(arr[0]);
-    HuffmanCodeGenerator(freq,arr,size);
-    
 }
