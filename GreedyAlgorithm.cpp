@@ -291,3 +291,122 @@ int main()
     printQueue(n);
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<iostream>
+#include<queue>
+
+using namespace std;
+
+struct Node
+{
+    int value;
+    char chValue;
+    Node * right;
+    Node * left;    
+   
+};
+void printQueue(priority_queue<Node > q)
+{
+    int end=q.size();
+    for( int i=0;i<end ;i++)
+    {     
+        Node  n= q.top();
+        q.pop();
+        cout<<n.value<<endl;
+    }  
+
+}
+
+bool operator<(const Node & a , const Node & b)
+{
+    return a.value>b.value;
+}
+Node *HuffmanCodeGeneratorUtil(priority_queue<Node> q)
+{
+    while(q.size()!=1)
+    {
+        cout<<"printing " <<endl;
+        printQueue(q);
+        Node node1=q.top();
+        q.pop();
+        Node node2=q.top();
+        q.pop();
+        Node newNode;
+        newNode.value=node1.value+node2.value;
+        newNode.chValue=' ';
+        newNode.right=&node2;
+        newNode.left=&node1;
+        cout<<" formed the new node value "<<newNode.value<<" with the values from "<<newNode.right->value<<" and " <<newNode.left->value<<endl;
+        q.push(newNode);
+    }
+    Node n=q.top();
+    return &n;
+    
+    
+}
+void Traversal(Node * n,string attach)
+{
+        cout<<"passed here "<<n->value<<endl;
+
+    if(n->left==NULL&&n->right==NULL)
+    {
+          cout<<"this "<<n->chValue<< " "<<attach<<endl;
+    }
+    else
+    {
+        Traversal(n->left,attach+"0");
+        Traversal(n->right,attach+"1");
+    }
+}
+void   HuffmanCodeGenerator(int * valueArr, char * chValueArr, int size)
+{
+    priority_queue<Node > q;
+    
+    for(int i=0;i<size;i++)
+    {
+        Node newNode;
+        newNode.value=valueArr[i];
+        newNode.chValue=chValueArr[i];
+        newNode.left=NULL;
+        newNode.right=NULL;
+        q.push(newNode);
+    }
+    Node *n=HuffmanCodeGeneratorUtil(q);
+        int s=n->left->value;
+
+    cout<<" formed the new node value "<<n->value<<" with the values from "<<n->right->value<<" and " <<n->left->value<<endl;
+    //Node *m=n.left;
+    //int s=n->left->value;
+        cout<<" formed the new node value "<<" "<<s<<endl;//<<" with the values from "<<m->right->value<<" and " <<m->left->value<<endl;
+
+    //Traversal(&n,"");
+}
+
+
+
+int main()
+{
+    char arr[] = {'a', 'b', 'c', 'd', 'e', 'f'};
+    int freq[] = {5, 9, 12, 13, 16, 45};
+    int size = sizeof(arr)/sizeof(arr[0]);
+    HuffmanCodeGenerator(freq,arr,size);
+    
+}
