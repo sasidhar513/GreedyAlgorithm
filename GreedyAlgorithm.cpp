@@ -309,3 +309,124 @@ void   HuffmanCodeGenerator(int * valueArr, char * chValueArr, int size)
     Node *n=q.top();
     Traversal(n,"");
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<iostream>
+#include<queue>
+using namespace std;
+struct AdjacentNode
+{
+	int value;
+	int distance;
+	AdjacentNode* adj;
+};
+struct AdjacentNodeList
+{
+	AdjacentNode * head;
+};
+class Graph
+{
+public:
+
+	int vertices;
+	AdjacentNodeList * arr;
+	Graph(int size)
+	{
+		this->vertices=size;
+		this->arr=new AdjacentNodeList[size];
+		for(int i=0;i<size;i++)
+		{
+			arr[i].head=NULL;
+		}
+	}
+	void addEdge(int source,int dest ,int distance)
+	{
+		AdjacentNode *node=new AdjacentNode;
+		node->value=dest;
+		node->distance=distance;
+		node->adj=arr[source].head;
+		arr[source].head=node;
+
+		AdjacentNode *node1=new AdjacentNode;
+		node1->value=source;
+		node1->distance=distance;
+		node1->adj=arr[dest].head;
+		arr[dest].head=node1;
+	}
+};
+struct node
+{
+	int value;
+	int key;
+	node(int value,int key)
+	{
+		this->key=key;
+		this->value=value;
+	}
+};
+struct compare
+{
+	bool operator()(node * l,node * r)
+	{
+		return l->key>r->key;
+	}
+};
+void printPRIMS(Graph * d)
+{
+	priority_queue<node *,vector<node *>,compare> heap;
+	for(int i=1;i<9;i++)
+	{
+		node *n =new node(i,9999);
+		heap.push(n);
+	}
+	node *n =new node(0,0);
+	heap.push(n);
+	while(!heap.empty())
+	{
+		node *n=
+	}
+
+}
+int main()
+{
+	Graph* d=new Graph(9);
+	d->addEdge( 0, 1, 4);
+	d->addEdge( 0, 7, 8);
+	d->addEdge( 1, 2, 8);
+	d->addEdge( 1, 7, 11);
+	d->addEdge( 2, 3, 7);
+	d->addEdge( 2, 8, 2);
+	d->addEdge( 2, 5, 4);
+	d->addEdge( 3, 4, 9);
+	d->addEdge( 3, 5, 14);
+	d->addEdge( 4, 5, 10);
+	d->addEdge( 5, 6, 2);
+	d->addEdge( 6, 7, 1);
+	d->addEdge( 6, 8, 6);
+	d->addEdge( 7, 8, 7);
+	printPRIMS(d);
+}
