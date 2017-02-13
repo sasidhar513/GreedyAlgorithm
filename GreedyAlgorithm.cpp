@@ -430,3 +430,63 @@ int main()
 	d->addEdge( 7, 8, 7);
 	printPRIMS(d);
 }
+
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#include<iostream>
+#include<algorithm>
+
+#define w(i) while(i>0)
+#define loop(i,m) for(int i=0;i<m;i++)
+using namespace std;
+int main() {
+
+    int tc;
+    bool fail=false;
+    int size;
+    cin>>tc;
+    w(tc)
+    {
+        cin>>size;
+        int arr[size], sortedArr[size] ;
+        loop(i,size)
+        {
+            cin>>arr[i];
+            sortedArr[i]=arr[i];
+        }
+        sort(sortedArr,sortedArr+size);
+        loop(i,size)
+        {
+            if(sortedArr[i]==arr[i])
+                continue;
+            int count=0;
+            while(sortedArr[i]!=arr[i]||sortedArr[i+1]!=arr[i+1]||sortedArr[i+2]!=arr[i+3])
+            {
+                int temp=arr[i];
+                arr[i]=arr[i+1];
+                arr[i+1]=arr[i+2];
+                arr[i+2]=temp;
+                if(count==5)
+                {
+                    fail=true;
+                    break;
+                }
+                count++;
+            }
+            if(fail)
+                break;
+        }
+        if(fail)
+            cout<<"NO";
+        else
+            cout<<"YES";
+        tc--;
+        
+        
+    }
+    return 0;
+}
+
